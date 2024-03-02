@@ -1,0 +1,26 @@
+# CLI settings 
+SESSION_STRING : ""
+API_ID : 
+API_HASH : ""
+
+
+
+
+
+
+
+#API SETTINGS
+BOT_TOKEN : ""
+
+
+
+
+#ADMINIASTARTOT SETTINGS
+ADMINS : 
+  - 6379933870
+  - 1171924395
+  - 103097645
+
+
+#DB
+MONGO_STRING : ""
