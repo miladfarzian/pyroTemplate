@@ -11,8 +11,6 @@ async def check_if_user_is_admin(_,__,m):
     except:
         return False    
         
-    
-is_admin = filters.create(func=check_if_user_is_admin)    
 
 
 
@@ -29,7 +27,7 @@ async def check_id_user_joined_channel(_,client,message):
 
   
 
-async def not_member(_,client,message):
+async def check_if_user_is_not_member(_,client,message):
     user_id = message.from_user.id
     try:
         await client.get_chat_member(force_join_channel_id, user_id)
@@ -48,3 +46,12 @@ async def check_if_user_is_sudo(_,client,message):
     if user_id==sudo:
         return True
 
+
+
+
+#list filters 
+    
+is_admin = filters.create(func=check_if_user_is_admin)    
+is_member = filters.create(func=check_id_user_joined_channel)    
+not_member = filters.create(func=check_if_user_is_not_member)    
+is_sudo = filters.create(func=check_if_user_is_sudo)    
