@@ -1,4 +1,5 @@
 import yaml
+from db_tools import *
 with open("configs/configs.yml",'r') as file :
     data = yaml.safe_load(file)
 
@@ -8,3 +9,5 @@ bot_token =  data['BOT_TOKEN']
 session_string =  data['SESSION_STRING']
 admins = data['ADMINS']
 mongo_string = data['MONGO_STRING']
+force_join_channel_id = ''
+sudo = '00'
