@@ -1,5 +1,5 @@
 from pyrogram import filters
-from configs.configs import admins , force_join_channel_id , sudo
+from configs.config import admins , force_join_channel_id , sudo
 
 
 #--------------{ admin filter }---------------- 
