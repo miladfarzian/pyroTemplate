@@ -1,6 +1,6 @@
 import yaml
 from db_tools import *
-with open("configs/configs.yml",'r') as file :
+with open("configs/config.yml",'r') as file :
     data = yaml.safe_load(file)
 
 api_id = data['API_ID']
