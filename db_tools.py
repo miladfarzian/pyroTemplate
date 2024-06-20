@@ -1,67 +1,26 @@
 import os
-import pymongo
 import json
 from configs.config import *
+from pysondb import db
 from pykeyboard import InlineKeyboard , InlineButton
-client = pymongo.MongoClient(mongo_string)
-db = client['file_manager']
-users_collection = db["users"]
-settings = db['settings']
+from log_handler import error_logger , info_file_handler
 
-
-
-
-
-def save_users():
-    print('[ * ] saving dabatabase users in json file')
-    with open('users.json','w') as bot_users_file :
-        cursor = users_collection.find()
-        users = list(cursor)
-        json.dump(users,bot_users_file,indent=2)
-        print("[ ✓ ] database users saved in ->c users.json")
-        
-
-def delete_user(user_id):
-    print("[ * ] Deleteing user {} from database ".format(user_id))
-    users_collection.delete_one({"_id":user_id})
-    print("[ ✓ ] User {} Deleted from database".format(user_id))
-
-def read_users():
-   if not os.path.exists("users.json") :
-       save_users()
-   with open('users.json','r') as bot_users_file :
-       return json.load(bot_users_file)
-   
-   
-def get_user(user_id):
-    user_id = int(user_id)
-    print("[ * ] gettings user {} data from databse".format(user_id))
-    for user in read_users():
-        if user['_id'] ==int(user_id):
-            print(user)
-            return user
-        
-    try:    
-        user_data = {
-                "_id":user_id,
-            }
-        users_collection.insert_one(user_data)  
-        save_users()  
-        return user_data
-    except:
-      pass
+users = db.getDb("db_file/users.json")
+def add_user(user_id,lang):
+    user_model = {
+        "user_id" : user_id,
+        "wallet" : 0,
+        "lan" : lang
+    }
     
+    
+    
+    if users.getByQuery({"user_id":user_id})!=[]:
+        users.add(
+            user_model
+        )
         
-def add_user_to_db(user_id,inviter=0):
-    if not get_user(user_id):
-        print("[ * ] Adding User {} to database".format(user_id))
-        user_data = {
-            "_id":user_id,
-        }
-        users_collection.insert_one(user_data)
-        print('[ ✓ ] User {} Added to database'.format(user_id))
-        save_users()
-        return 
-    print("[ × ] user {} existed in db not added to dabatabse".format(user_id))
-        
+        info_file_handler.info(f"user with id [{user_id}] added to db")
+
+
 
